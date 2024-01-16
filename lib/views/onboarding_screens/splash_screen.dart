@@ -1,12 +1,43 @@
+import 'dart:async';
 import 'dart:math';
-
-import 'package:abc_banking/views/widgets/card.dart';
 import 'package:abc_banking/views/widgets/exports.dart';
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Timer(const Duration(seconds: 4), () {
+      Navigator.of(context).pushReplacement(_createRoute());
+    });
+  }
+
+  Route _createRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          const LoginScreen(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(5.0, 6.0);
+        const end = Offset.zero;
+        const curve = Curves.linear;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
