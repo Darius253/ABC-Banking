@@ -1,3 +1,4 @@
+import 'package:abc_banking/views/widgets/exports.dart';
 import 'package:flutter/material.dart';
 
 class BankCard extends StatelessWidget {
@@ -7,6 +8,7 @@ class BankCard extends StatelessWidget {
   final Color? secondColor;
   final Color? thirdColor;
   final Widget? widget;
+  final bool? borderColor;
   const BankCard({
     super.key,
     this.height,
@@ -15,14 +17,20 @@ class BankCard extends StatelessWidget {
     this.secondColor,
     this.thirdColor,
     this.widget,
+    this.borderColor,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(
+    BuildContext context,
+  ) {
     return Container(
         width: width ?? MediaQuery.sizeOf(context).width,
         height: height ?? MediaQuery.sizeOf(context).height * 0.27,
         decoration: BoxDecoration(
+          border: borderColor == true
+              ? Border.all(color: MainColors.purple)
+              : Border.all(color: Colors.transparent),
           borderRadius: BorderRadius.circular(30),
           gradient: LinearGradient(
             begin: Alignment.topLeft,

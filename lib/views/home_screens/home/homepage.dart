@@ -1,4 +1,5 @@
 import 'package:abc_banking/views/widgets/exports.dart';
+import 'package:abc_banking/views/widgets/home_page_row.dart';
 import 'package:flutter/material.dart';
 
 class HoomePage extends StatelessWidget {
@@ -29,7 +30,10 @@ class HoomePage extends StatelessWidget {
               const SizedBox(
                 height: 25,
               ),
-              const Balance(),
+              const Balance(
+                text: 'Total Balance',
+                amount: '50,000.00',
+              ),
               const SizedBox(
                 height: 20,
               ),
@@ -90,55 +94,7 @@ class HoomePage extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    CircledButton(
-                      icon: Icons.add,
-                      width: 90,
-                      text: 'Add',
-                      onTap: () {},
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    CircledButton(
-                      icon: Icons.trending_up_outlined,
-                      width: 90,
-                      text: 'Send',
-                      onTap: () {},
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    CircledButton(
-                      icon: Icons.trending_down_outlined,
-                      width: 90,
-                      text: 'Received',
-                      onTap: () {},
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    CircledButton(
-                      icon: Icons.payments,
-                      width: 90,
-                      text: 'Pay Bill',
-                      onTap: () {},
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    CircledButton(
-                      icon: Icons.grid_3x3_sharp,
-                      width: 90,
-                      text: 'More',
-                      onTap: () {},
-                    ),
-                  ],
-                ),
-              ),
+              const HomePageRow(),
               const SizedBox(
                 height: 40,
               ),
@@ -154,9 +110,22 @@ class HoomePage extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const TransactionTile(),
-              const TransactionTile(),
-              const TransactionTile(),
+              const TransactionTile(
+                accountName: 'Kingston University',
+                amount: '£15900.00',
+              ),
+              const TransactionTile(
+                accountName: 'Kingston University',
+                amount: '£15900.00',
+              ),
+              const TransactionTile(
+                accountName: 'Kingston University',
+                amount: '£15900.00',
+              ),
+              const TransactionTile(
+                accountName: 'Kingston University',
+                amount: '£15900.00',
+              ),
             ],
           ),
         ),

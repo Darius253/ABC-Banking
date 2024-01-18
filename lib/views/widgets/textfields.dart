@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class TextFields extends StatefulWidget {
   final String hintText;
-  final IconData prefixIcon;
+  final IconData? prefixIcon;
+  final bool? readOnly;
   final IconData? suffixIcon;
   final TextEditingController controller;
   final Function(String)? onChanged;
@@ -10,11 +11,12 @@ class TextFields extends StatefulWidget {
   const TextFields({
     super.key,
     required this.hintText,
-    required this.prefixIcon,
+    this.prefixIcon,
     required this.controller,
     required this.onChanged,
     required this.keyboardType,
     this.suffixIcon,
+    this.readOnly,
   });
 
   @override
@@ -26,7 +28,7 @@ class _TextFieldsState extends State<TextFields> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(bottom: 7),
+      // margin: const EdgeInsets.only(bottom: 7),
       decoration: BoxDecoration(
           color: const Color.fromARGB(255, 25, 24, 24),
           borderRadius: BorderRadius.circular(10)),
@@ -37,7 +39,7 @@ class _TextFieldsState extends State<TextFields> {
         controller: widget.controller,
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return 'Invalid Field';
+            return 'This field cannot be empty!';
           } else {
             return null;
           }
@@ -46,7 +48,9 @@ class _TextFieldsState extends State<TextFields> {
         onChanged: widget.onChanged,
         decoration: InputDecoration(
           hintText: widget.hintText,
-          prefixIcon: Icon(widget.prefixIcon),
+          prefixIcon: widget.prefixIcon != null
+              ? Icon(widget.prefixIcon)
+              : const SizedBox.shrink(),
           suffixIcon: widget.suffixIcon != null
               ? InkWell(
                   onTap: () {

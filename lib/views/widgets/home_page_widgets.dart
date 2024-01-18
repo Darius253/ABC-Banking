@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 
 class CircledButton extends StatelessWidget {
-  final IconData icon;
+  final IconData? icon;
   final double? height;
   final double? width;
   final String? text;
+  final Widget? svg;
   final Function()? onTap;
   const CircledButton({
     super.key,
-    required this.icon,
+    this.icon,
     required this.onTap,
     this.height,
     this.width,
     this.text,
+    this.svg,
   });
 
   @override
@@ -30,7 +32,7 @@ class CircledButton extends StatelessWidget {
               color: Color.fromARGB(199, 47, 71, 67),
             ),
             child: Center(
-              child: Icon(
+              child: svg?? Icon(
                 icon,
                 color: Colors.white,
               ),

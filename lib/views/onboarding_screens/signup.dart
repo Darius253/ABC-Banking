@@ -1,5 +1,4 @@
 import 'package:abc_banking/views/widgets/exports.dart';
-import 'package:abc_banking/views/widgets/loader.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -161,20 +160,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         text: 'Register',
                         onTap: () {
                           if (_formKey.currentState!.validate()) {
-                            loading(context);
+                            loading(context, false);
 
                             Navigator.pushReplacement(
                                 context,
-                                MaterialPageRoute(
-                                    builder: (context) => const Home()));
+                                PageRouteBuilder(
+                                    barrierDismissible: true,
+                                    opaque: false,
+                                    pageBuilder: (_, anim1, anim2) =>
+                                        const Home()));
                           }
                         }),
                     const SizedBox(height: 30),
                     TextspanNavigator(
                         onTap: (() => Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => const LoginScreen(),
+                            PageRouteBuilder(
+                              barrierDismissible: true,
+                              opaque: false,
+                              pageBuilder: (_, anim1, anim2) =>
+                                  const LoginScreen(),
                             ))),
                         firstText: 'Already part of the team? ',
                         secondText: 'Sign In here!')

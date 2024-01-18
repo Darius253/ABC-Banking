@@ -11,7 +11,7 @@ class Appbar extends StatelessWidget {
       child: Row(
         children: [
           CircledButton(
-            icon: Icons.grid_view_outlined,
+            icon: Icons.ac_unit_outlined,
             onTap: () {},
           ),
           const Expanded(child: SizedBox.shrink()),

@@ -21,44 +21,60 @@ class _TransactionsState extends State<Transactions> {
       const InTransactions(),
       const OutTransactions(),
     ];
-    return Container(
-      color: Colors.black,
-      child: Padding(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        automaticallyImplyLeading: false,
+        title: Center(
+          child: Text(
+            'Transaction History',
+            style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                  color: const Color.fromARGB(255, 255, 255, 255),
+                ),
+          ),
+        ),
+      ),
+      backgroundColor: Colors.black,
+      body: Padding(
         padding: const EdgeInsets.all(5.0),
-        child: ListView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: Text(
-                'Statistics',
+            const SizedBox(
+              height: 25,
+            ),
+            const Balance(
+              text: 'Total Transactions',
+              amount: '35,000.00',
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            ListTile(
+              title: Text(
+                'Print Statement',
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       color: const Color.fromARGB(255, 255, 255, 255),
                     ),
+              ),
+              trailing: CircledButton(
+                icon: Icons.arrow_forward_ios_outlined,
+                height: 40,
+                onTap: () {},
               ),
             ),
             const SizedBox(
               height: 25,
             ),
-            const Balance(),
-            const SizedBox(
-              height: 25,
-            ),
             TransactionWidget(
-              isSelected: isSelected,
-              onTap: () {
-                setState(() {
-                  isSelected = !isSelected;
-                });
-                _pageController.animateToPage(0,
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.linear);
-              },
+              pageController: _pageController,
             ),
             const SizedBox(
               height: 25,
             ),
-            SizedBox(
-              height: MediaQuery.sizeOf(context).height,
+            Expanded(
               child: PageView(
+                physics: const NeverScrollableScrollPhysics(),
                 controller: _pageController,
                 children: pages,
               ),

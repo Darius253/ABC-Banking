@@ -1,7 +1,6 @@
-import 'package:abc_banking/views/home_screens/home/transactions.dart';
-import 'package:abc_banking/views/home_screens/homepage.dart';
 import 'package:abc_banking/views/widgets/exports.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -19,6 +18,8 @@ class _HomeState extends State<Home> {
     List<Widget> pages = [
       const HoomePage(),
       const Transactions(),
+      const Accounts(),
+      const Settings(),
     ];
     return Scaffold(
         bottomNavigationBar: BottomAppBar(
@@ -63,11 +64,21 @@ class _HomeState extends State<Home> {
           decoration: const BoxDecoration(
               color: Color.fromARGB(255, 111, 217, 200),
               shape: BoxShape.circle),
-          child: const Icon(Icons.qr_code_2_outlined),
+          child: InkWell(
+            onTap: (() => Navigator.push(
+                context,
+                PageRouteBuilder(
+                    barrierDismissible: true,
+                    opaque: false,
+                    pageBuilder: (_, anim1, anim2) =>
+                        const TransferMoneyScreen()))),
+            child: Lottie.asset('assets/images/send.json', fit: BoxFit.contain),
+          ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         backgroundColor: const Color.fromARGB(255, 0, 0, 0),
         body: PageView(
+          physics: const NeverScrollableScrollPhysics(),
           controller: _pageController,
           children: pages,
           onPageChanged: (value) {
@@ -79,7 +90,8 @@ class _HomeState extends State<Home> {
   }
 
   void _navigateToPage(int currentIndex) {
-    _pageController.animateToPage(currentIndex,
-        duration: const Duration(milliseconds: 300), curve: Curves.linear);
+    _pageController.jumpToPage(
+      currentIndex,
+    );
   }
 }
