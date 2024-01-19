@@ -1,5 +1,4 @@
 import 'package:abc_banking/views/home_screens/settings/account_details.dart';
-import 'package:abc_banking/views/home_screens/settings/view_card.dart';
 import 'package:abc_banking/views/widgets/exports.dart';
 import 'package:flutter/material.dart';
 
@@ -80,6 +79,7 @@ class _SettingsState extends State<Settings> {
                     sortNumber: '',
                     address: '',
                     phoneNumber: '',
+                    accountType: '',
                   ),
                 ),
               );

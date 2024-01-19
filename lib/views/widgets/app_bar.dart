@@ -18,7 +18,21 @@ class Appbar extends StatelessWidget {
           CircledButton(
             width: 50,
             icon: Icons.credit_card_rounded,
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  barrierDismissible: true,
+                  opaque: false,
+                  pageBuilder: (_, anim1, anim2) => const CardDetails(
+                    accountName: '',
+                    cardNumber: '',
+                    cvv: '',
+                    expirydate: '',
+                  ),
+                ),
+              );
+            },
           ),
           const SizedBox(
             width: 10,

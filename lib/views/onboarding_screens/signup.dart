@@ -1,4 +1,6 @@
+import 'package:abc_banking/controllers/customer_controller.dart';
 import 'package:abc_banking/views/widgets/exports.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -21,6 +23,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String? houseAddress;
   String? password;
   String? phoneNumber;
+  String? accountType;
+  String? accountNumber;
+  String? sortNumber;
+  bool isloading = false;
+  final CustomerController _customerController = CustomerController();
+
+  final List<String> accountTypes = [
+    "Current Account",
+    "International Account",
+    "Fixed Account",
+    "Savings Account"
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -110,6 +124,79 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       hintText: "Enter your Phone Number",
                       prefixIcon: Icons.phone,
                     ),
+                    const SizedBox(height: 25),
+                    DropdownButtonHideUnderline(
+                      child: DropdownButton2(
+                        isExpanded: true,
+                        hint: Row(
+                          children: [
+                            Expanded(
+                              child: Text('Choose Account Type',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .copyWith(
+                                          color: const Color.fromARGB(
+                                              255, 255, 255, 255))),
+                            ),
+                          ],
+                        ),
+                        items: accountTypes
+                            .map((item) => DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Text(item,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium!
+                                          .copyWith(
+                                              color: const Color.fromARGB(
+                                                  255, 255, 254, 254))),
+                                ))
+                            .toList(),
+                        value: accountType,
+                        onChanged: (value) {
+                          setState(() {
+                            accountType = value.toString();
+                          });
+                        },
+                        buttonStyleData: ButtonStyleData(
+                          height: MediaQuery.of(context).size.height * 0.075,
+                          width: MediaQuery.of(context).size.width,
+                          padding: const EdgeInsets.only(left: 14, right: 14),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: const Color.fromARGB(255, 138, 111, 201),
+                            ),
+                            color: const Color.fromARGB(255, 25, 24, 24),
+                          ),
+                        ),
+                        iconStyleData: const IconStyleData(
+                          icon: Icon(
+                            Icons.arrow_drop_down,
+                          ),
+                          iconEnabledColor: Color.fromARGB(255, 255, 255, 255),
+                        ),
+                        dropdownStyleData: DropdownStyleData(
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: const Color.fromARGB(255, 234, 236, 240),
+                            ),
+                            color: const Color.fromARGB(255, 25, 24, 24),
+                          ),
+                          elevation: 0,
+                          offset: const Offset(0, 25),
+                          scrollbarTheme: ScrollbarThemeData(
+                            radius: const Radius.circular(8),
+                            thickness: MaterialStateProperty.all<double>(6),
+                            thumbVisibility:
+                                MaterialStateProperty.all<bool>(true),
+                          ),
+                        ),
+                      ),
+                    ),
                     const SizedBox(height: 10),
                     Row(
                       children: <Widget>[
@@ -143,7 +230,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         color:
                                             Color.fromARGB(255, 95, 95, 95))),
                                 TextSpan(
-                                    text: 'Privacy',
+                                    text: 'Privacy Policy',
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Color.fromARGB(
@@ -156,21 +243,38 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     const SizedBox(height: 30),
                     AuthenticationButton(
-                        formKey: _formKey,
-                        text: 'Register',
-                        onTap: () {
-                          if (_formKey.currentState!.validate()) {
-                            loading(context, false);
+                      formKey: _formKey,
+                      text: 'Register',
+                      onTap: () {
+                        setState(() {
+                          isloading = true;
+                        });
 
-                            Navigator.pushReplacement(
-                                context,
-                                PageRouteBuilder(
-                                    barrierDismissible: true,
-                                    opaque: false,
-                                    pageBuilder: (_, anim1, anim2) =>
-                                        const Home()));
-                          }
-                        }),
+                        if (_formKey.currentState!.validate() &&
+                            accountType != null) {
+                          isloading == true
+                              ? loading(context, false)
+                              : const SizedBox.shrink();
+                          setState(() {
+                            accountNumber = generateAccountNumber();
+                            sortNumber = generateSortNumber();
+                          });
+
+                          _customerController.setUpAccount(
+                            fullName!,
+                            email!,
+                            accountNumber!,
+                            sortNumber!,
+                            houseAddress!,
+                            phoneNumber!,
+                            accountType!,
+                            DateTime.now(),
+                            password!,
+                            context,
+                          );
+                        }
+                      },
+                    ),
                     const SizedBox(height: 30),
                     TextspanNavigator(
                         onTap: (() => Navigator.push(

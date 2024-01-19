@@ -5,9 +5,14 @@ class TransferMoneyScreen extends StatefulWidget {
   final String? accountNumber;
   final String? payeeName;
   final String? sortNumber;
+  final bool? readOnly;
 
   const TransferMoneyScreen(
-      {Key? key, this.accountNumber, this.payeeName, this.sortNumber})
+      {Key? key,
+      this.accountNumber,
+      this.payeeName,
+      this.sortNumber,
+      this.readOnly})
       : super(key: key);
 
   @override
@@ -16,23 +21,22 @@ class TransferMoneyScreen extends StatefulWidget {
 
 class _TransferMoneyScreenState extends State<TransferMoneyScreen> {
   final formKey = GlobalKey<FormState>();
-  // final _payeeNameController = TextEditingController();
-  // final _accountNumberController = TextEditingController();
-  // final _sortNumberController = TextEditingController();
+
   final _referenceController = TextEditingController();
   final _amountController = TextEditingController();
 
-  String? amount;
-  String? payeeName;
-  String? accountNumber;
-  String? sortNumber;
-  String? reference;
+  String amount='';
+  String payeeName='';
+  String accountNumber='';
+  String sortNumber='';
+  String reference = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.black,
         elevation: 0,
         leading: CircledButton(
@@ -69,7 +73,7 @@ class _TransferMoneyScreenState extends State<TransferMoneyScreen> {
                 ),
                 const SizedBox(height: 15),
                 TransferTextField(
-                  readOnly: false,
+                  readOnly: widget.readOnly ?? false,
                   intialValue: widget.payeeName,
                   maxLength: 25,
                   keyboardType: TextInputType.name,
@@ -83,7 +87,7 @@ class _TransferMoneyScreenState extends State<TransferMoneyScreen> {
                 ),
                 const SizedBox(height: 15),
                 TransferTextField(
-                  readOnly: false,
+                  readOnly: widget.readOnly ?? false,
                   intialValue: widget.accountNumber,
                   maxLength: 14,
                   keyboardType: TextInputType.number,
@@ -97,7 +101,7 @@ class _TransferMoneyScreenState extends State<TransferMoneyScreen> {
                 ),
                 const SizedBox(height: 15),
                 TransferTextField(
-                  readOnly: false,
+                  readOnly: widget.readOnly ?? false,
                   intialValue: widget.sortNumber,
                   maxLength: 8,
                   keyboardType: TextInputType.number,
@@ -123,21 +127,17 @@ class _TransferMoneyScreenState extends State<TransferMoneyScreen> {
                   },
                 ),
                 const SizedBox(height: 20),
-                if (widget.payeeName != null ||
-                    amount != null &&
-                        payeeName != null &&
-                        widget.accountNumber != null ||
-                    accountNumber != null && widget.sortNumber != null ||
-                    sortNumber != null && reference != null)
-                  CircledButton(
-                    text: 'Confirm',
-                    width: 70,
-                    height: 70,
-                    icon: Icons.payment,
-                    onTap: () {
+                CircledButton(
+                  text: 'Confirm',
+                  width: 70,
+                  height: 70,
+                  icon: Icons.payment,
+                  onTap: () {
+                    if (formKey.currentState!.validate()) {
                       confirmDetails();
-                    },
-                  ),
+                    }
+                  },
+                )
               ],
             ),
           ),
@@ -191,19 +191,19 @@ class _TransferMoneyScreenState extends State<TransferMoneyScreen> {
                   ),
                   ConfirmDetails(
                     title: 'Payee Name',
-                    details: widget.payeeName ?? payeeName!,
+                    details: widget.payeeName ?? payeeName,
                   ),
                   ConfirmDetails(
                     title: 'Account Number',
-                    details: widget.accountNumber ?? accountNumber!,
+                    details: widget.accountNumber ?? accountNumber,
                   ),
                   ConfirmDetails(
                     title: 'Sort Number',
-                    details: widget.sortNumber ?? sortNumber!,
+                    details: widget.sortNumber ?? sortNumber,
                   ),
                   ConfirmDetails(
                     title: 'Reference',
-                    details: reference!,
+                    details: reference,
                   ),
                 ],
               ),

@@ -42,6 +42,7 @@ class _AccountsState extends State<Accounts> {
                     payeeName: 'Darius Tron',
                     accountNumber: '1234567890',
                     sortNumber: '123456789',
+                    readOnly: true,
                   ),
                 ),
               ),

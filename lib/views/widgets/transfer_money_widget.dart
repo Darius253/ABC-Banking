@@ -8,6 +8,7 @@ class TransferTextField extends StatelessWidget {
   final int maxLength;
   final String? intialValue;
   final bool readOnly;
+  final GlobalKey<FormState>? formKey;
   const TransferTextField({
     super.key,
     this.controller,
@@ -17,6 +18,7 @@ class TransferTextField extends StatelessWidget {
     required this.maxLength,
     this.intialValue,
     required this.readOnly,
+    this.formKey,
   });
 
   @override

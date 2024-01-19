@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:abc_banking/views/home_screens/account/add_account.dart';
@@ -9,7 +10,7 @@ Future<void> loading(BuildContext context, bool? sending) async {
   return showDialog<void>(
     barrierColor: MainColors.teal,
     context: context,
-    barrierDismissible: true,
+    barrierDismissible: false,
     builder: (BuildContext context) {
       return Center(
         child: sending == false
@@ -29,6 +30,7 @@ Future<void> success(
     context: context,
     barrierDismissible: true,
     builder: (BuildContext context) {
+    
       return Center(
         child: LottieBuilder.asset('assets/images/success.json'),
       );

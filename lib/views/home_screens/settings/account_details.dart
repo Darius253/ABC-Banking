@@ -7,6 +7,7 @@ class AccountDetails extends StatefulWidget {
   final String sortNumber;
   final String address;
   final String phoneNumber;
+  final String accountType;
   const AccountDetails({
     super.key,
     required this.accountName,
@@ -14,6 +15,7 @@ class AccountDetails extends StatefulWidget {
     required this.sortNumber,
     required this.address,
     required this.phoneNumber,
+    required this.accountType,
   });
 
   @override
@@ -52,6 +54,17 @@ class _AccountDetailsState extends State<AccountDetails> {
                 maxLength: 25,
                 hintText: 'Name',
                 intialValue: widget.accountName,
+                onChanged: (value) {},
+                keyboardType: TextInputType.text,
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              TransferTextField(
+                readOnly: true,
+                maxLength: 8,
+                hintText: 'Account Type',
+                intialValue: widget.accountType,
                 onChanged: (value) {},
                 keyboardType: TextInputType.text,
               ),

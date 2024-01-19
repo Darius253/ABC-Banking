@@ -1,3 +1,4 @@
+import 'package:abc_banking/controllers/customer_controller.dart';
 import 'package:abc_banking/views/widgets/exports.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   String? email;
   String? password;
+  final CustomerController _customerController = CustomerController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,13 +87,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         onTap: () {
                           if (_formKey.currentState!.validate()) {
                             loading(context, false);
-                            Navigator.pushReplacement(
-                                context,
-                                PageRouteBuilder(
-                                    barrierDismissible: true,
-                                    opaque: false,
-                                    pageBuilder: (_, anim1, anim2) =>
-                                        const Home()));
+                            _customerController.signIn(
+                                email!, password!, context);
                           }
                         }),
                     const SizedBox(height: 30),

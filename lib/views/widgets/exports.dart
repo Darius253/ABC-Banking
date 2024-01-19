@@ -23,3 +23,4 @@ export 'package:abc_banking/views/widgets/transfer_money_widget.dart';
 export 'package:abc_banking/views/home_screens/settings/settings.dart';
 export 'package:abc_banking/views/home_screens/account/accounts.dart';
 export 'package:abc_banking/views/home_screens/home/transfer_money_screen.dart';
+export 'package:abc_banking/views/home_screens/settings/view_card.dart';
